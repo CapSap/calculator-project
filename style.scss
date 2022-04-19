@@ -1,0 +1,39 @@
+@use "_palette";
+
+.case {
+  background-color: palette.$case;
+  width: 400px;
+  height: 800px;
+  padding: 1em;
+
+  &__screen {
+    height: 40%;
+    background-color: palette.$screen-color;
+    margin-bottom: 1em;
+  }
+
+  &__btns {
+    height: 50%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px black solid;
+  }
+}
+
+.btn {
+  font-size: 2em;
+
+  &--number {
+    background-color: palette.$num;
+  }
+  &--operator {
+    background-color: palette.$operator;
+  }
+  &--top {
+    background-color: palette.$top;
+  }
+}
+
+#btn--0 {
+  grid-column-end: span 2;
+}
