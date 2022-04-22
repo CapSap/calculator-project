@@ -5,23 +5,44 @@
   width: 400px;
   height: 800px;
   padding: 1em;
-
+  border-radius: 30px;
   &__screen {
-    height: 40%;
+    border-radius: 30px;
+    margin: 10px;
+    padding: 20px;
+    height: 30%;
     background-color: palette.$screen-color;
     margin-bottom: 1em;
+    font-size: 2em;
+
+    &--arg {
+      padding: 0;
+      margin: 0;
+      display: inline;
+      vertical-align: bottom;
+    }
+
+    &--result {
+      font-weight: bold;
+      font-size: 2.5em;
+    }
   }
 
   &__btns {
-    height: 50%;
+    justify-content: end;
+    margin: 10px;
+    grid-gap: 10px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border: 1px black solid;
   }
 }
 
 .btn {
   font-size: 2em;
+  border-radius: 20px;
+  margin: 2px;
+  height: 80px;
+  color: #e4e3f2;
 
   &--number {
     background-color: palette.$num;
@@ -31,6 +52,9 @@
   }
   &--top {
     background-color: palette.$top;
+  }
+  &--equals {
+    background-color: darkgray;
   }
 }
 

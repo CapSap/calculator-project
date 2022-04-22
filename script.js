@@ -102,14 +102,51 @@ const appendTextElement = (elementType, textString, parentElement) => {
   parentElement.appendChild(element);
 };
 
-const testing = "1.1+2/123";
+const testing = "3.2+5*2";
 const testArr = testing.split(/([\d\.]+)/).filter((x) => x !== "");
 
 const doTheCalculation = (testArr) => {
-  let result = testArr.reduce((workingArray, current, index, array) => {\
-  
-    if (current === "*") {
-      workingArray = array[index-1] * array[index+1]
-    }
-  })
+  //problem is reduce is going over original array once only. so if 3 elements get reduced to 1, this new array is taken as argumnet but original array
+  let arrayToBeReduced = [];
+  //maybe use a while loop?
+
+  //also the order of operations is messed up. reduce will go until it finds the operator. SO seperate the +/-, *//
+  // and make the reduction funtions run only once.
+
+  return testArr.reduce(
+    (workingArray, current, index) => {
+      if (current === "*") {
+        return workingArray.splice(
+          index - 1,
+          3,
+          parseFloat(workingArray[index - 1]) *
+            parseFloat(workingArray[index + 1])
+        );
+      } else if (current === "/") {
+        return workingArray.splice(
+          index - 1,
+          3,
+          workingArray[index - 1] / workingArray[index + 1]
+        );
+      } else if (current === "+") {
+        console.log(workingArray);
+        console.log(workingArray[index + 1]);
+
+        return workingArray.splice(
+          index - 1,
+          3,
+          parseFloat(workingArray[index - 1]) +
+            parseFloat(workingArray[index + 1])
+        );
+      } else if (current === "-") {
+        return workingArray.splice(
+          index - 1,
+          3,
+          workingArray[index - 1] - workingArray[index + 1]
+        );
+      }
+      return workingArray;
+    },
+    [...testArr]
+  );
 };
