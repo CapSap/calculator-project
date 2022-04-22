@@ -102,50 +102,78 @@ const appendTextElement = (elementType, textString, parentElement) => {
   parentElement.appendChild(element);
 };
 
-const testing = "3.2+5*2";
+const testing = "3.2+5*2/3";
 const testArr = testing.split(/([\d\.]+)/).filter((x) => x !== "");
 
 const doTheCalculation = (testArr) => {
   //problem is reduce is going over original array once only. so if 3 elements get reduced to 1, this new array is taken as argumnet but original array
-  let arrayToBeReduced = [];
   //maybe use a while loop?
 
   //also the order of operations is messed up. reduce will go until it finds the operator. SO seperate the +/-, *//
   // and make the reduction funtions run only once.
 
+  // const multiplyDoneArray = testArr.reduce(
+  //   (workingArray, current, index) => {
+  //     if (current === "*") {
+  //       workingArray.splice(
+  //         index - 1,
+  //         3,
+  //         workingArray[index - 1] * workingArray[index + 1]
+  //       );
+  //     }
+  //     return workingArray;
+  //   },
+  //   [...testArr]
+  // );
+  // const dividyDoneArray = multiplyDoneArray.reduce(
+  //   (workingArray, current, index) => {
+  //     if (current === "/") {
+  //       workingArray.splice(
+  //         index - 1,
+  //         3,
+  //         workingArray[index - 1] / workingArray[index + 1]
+  //       );
+  //     }
+  //     return workingArray;
+  //   },
+  //   [...multiplyDoneArray]
+  // );
+  // return dividyDoneArray;
+
   return testArr.reduce(
     (workingArray, current, index) => {
+      console.log(workingArray);
       if (current === "*") {
-        return workingArray.splice(
-          index - 1,
-          3,
+        const result =
           parseFloat(workingArray[index - 1]) *
-            parseFloat(workingArray[index + 1])
-        );
-      } else if (current === "/") {
-        return workingArray.splice(
-          index - 1,
-          3,
-          workingArray[index - 1] / workingArray[index + 1]
-        );
-      } else if (current === "+") {
-        console.log(workingArray);
-        console.log(workingArray[index + 1]);
-
-        return workingArray.splice(
-          index - 1,
-          3,
-          parseFloat(workingArray[index - 1]) +
-            parseFloat(workingArray[index + 1])
-        );
-      } else if (current === "-") {
-        return workingArray.splice(
-          index - 1,
-          3,
-          workingArray[index - 1] - workingArray[index + 1]
-        );
+          parseFloat(workingArray[index + 1]);
+        console.log(result);
+        return workingArray.splice(index - 1, 3, 1);
       }
-      return workingArray;
+      console.log(workingArray);
+      // else if (current === "/") {
+      //   workingArray.splice(
+      //     index - 1,
+      //     3,
+      //     workingArray[index - 1] / workingArray[index + 1]
+      //   );
+      // } else if (current === "+") {
+      //   console.log(workingArray);
+      //   console.log(workingArray[index + 1]);
+
+      //   workingArray.splice(
+      //     index - 1,
+      //     3,
+      //     parseFloat(workingArray[index - 1]) +
+      //       parseFloat(workingArray[index + 1])
+      //   );
+      // } else if (current === "-") {
+      //   workingArray.splice(
+      //     index - 1,
+      //     3,
+      //     workingArray[index - 1] - workingArray[index + 1]
+      //   );
+      // }
     },
     [...testArr]
   );
