@@ -102,79 +102,77 @@ const appendTextElement = (elementType, textString, parentElement) => {
   parentElement.appendChild(element);
 };
 
-const testing = "3.2+5*2/3";
+const testing = "1*2+3*4";
 const testArr = testing.split(/([\d\.]+)/).filter((x) => x !== "");
 
 const doTheCalculation = (testArr) => {
-  //problem is reduce is going over original array once only. so if 3 elements get reduced to 1, this new array is taken as argumnet but original array
-  //maybe use a while loop?
+  doMultiplication = testArr
+    .reduce(
+      (workingArray, current, index) => {
+        if (current === "*") {
+          const result =
+            parseFloat(workingArray[index - 1]) *
+            parseFloat(workingArray[index + 1]);
+          workingArray.splice(index, 1, result);
+          workingArray[index - 1] = "";
+          workingArray[index + 1] = "";
+        }
+        return workingArray;
+      },
+      [...testArr]
+    )
+    .filter((x) => x !== "");
 
-  //also the order of operations is messed up. reduce will go until it finds the operator. SO seperate the +/-, *//
-  // and make the reduction funtions run only once.
+  const doDivision = doMultiplication
+    .reduce(
+      (workingArray, current, index) => {
+        if (current === "/") {
+          const result =
+            parseFloat(workingArray[index - 1]) /
+            parseFloat(workingArray[index + 1]);
+          workingArray.splice(index, 1, result);
+          workingArray[index - 1] = "";
+          workingArray[index + 1] = "";
+        }
+        return workingArray;
+      },
+      [...doMultiplication]
+    )
+    .filter((x) => x !== "");
 
-  // const multiplyDoneArray = testArr.reduce(
-  //   (workingArray, current, index) => {
-  //     if (current === "*") {
-  //       workingArray.splice(
-  //         index - 1,
-  //         3,
-  //         workingArray[index - 1] * workingArray[index + 1]
-  //       );
-  //     }
-  //     return workingArray;
-  //   },
-  //   [...testArr]
-  // );
-  // const dividyDoneArray = multiplyDoneArray.reduce(
-  //   (workingArray, current, index) => {
-  //     if (current === "/") {
-  //       workingArray.splice(
-  //         index - 1,
-  //         3,
-  //         workingArray[index - 1] / workingArray[index + 1]
-  //       );
-  //     }
-  //     return workingArray;
-  //   },
-  //   [...multiplyDoneArray]
-  // );
-  // return dividyDoneArray;
+  const doAddition = doDivision
+    .reduce(
+      (workingArray, current, index) => {
+        if (current === "+") {
+          const result =
+            parseFloat(workingArray[index - 1]) +
+            parseFloat(workingArray[index + 1]);
+          workingArray.splice(index, 1, result);
+          workingArray[index - 1] = "";
+          workingArray[index + 1] = "";
+        }
+        return workingArray;
+      },
+      [...doDivision]
+    )
+    .filter((x) => x !== "");
 
-  return testArr.reduce(
-    (workingArray, current, index) => {
-      console.log(workingArray);
-      if (current === "*") {
-        const result =
-          parseFloat(workingArray[index - 1]) *
-          parseFloat(workingArray[index + 1]);
-        console.log(result);
-        return workingArray.splice(index - 1, 3, 1);
-      }
-      console.log(workingArray);
-      // else if (current === "/") {
-      //   workingArray.splice(
-      //     index - 1,
-      //     3,
-      //     workingArray[index - 1] / workingArray[index + 1]
-      //   );
-      // } else if (current === "+") {
-      //   console.log(workingArray);
-      //   console.log(workingArray[index + 1]);
+  const doSubtraction = doAddition
+    .reduce(
+      (workingArray, current, index) => {
+        if (current === "+") {
+          const result =
+            parseFloat(workingArray[index - 1]) +
+            parseFloat(workingArray[index + 1]);
+          workingArray.splice(index, 1, result);
+          workingArray[index - 1] = "";
+          workingArray[index + 1] = "";
+        }
+        return workingArray;
+      },
+      [...doAddition]
+    )
+    .filter((x) => x !== "");
 
-      //   workingArray.splice(
-      //     index - 1,
-      //     3,
-      //     parseFloat(workingArray[index - 1]) +
-      //       parseFloat(workingArray[index + 1])
-      //   );
-      // } else if (current === "-") {
-      //   workingArray.splice(
-      //     index - 1,
-      //     3,
-      //     workingArray[index - 1] - workingArray[index + 1]
-      //   );
-      // }
-    },
-    [...testArr]
-  );
+  return doSubtraction;
 };
