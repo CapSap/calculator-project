@@ -3,21 +3,41 @@
   width: 400px;
   height: 800px;
   padding: 1em;
+  border-radius: 30px;
 }
 .case__screen {
-  height: 40%;
+  border-radius: 30px;
+  margin: 10px;
+  padding: 20px;
+  height: 30%;
   background-color: #c2e4c5;
   margin-bottom: 1em;
+  font-size: 2em;
+}
+.case__screen--arg {
+  padding: 0;
+  margin: 0;
+  display: inline;
+  vertical-align: bottom;
+}
+.case__screen--result {
+  font-weight: bold;
+  font-size: 2.5em;
 }
 .case__btns {
-  height: 50%;
+  justify-content: end;
+  margin: 10px;
+  grid-gap: 10px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px black solid;
 }
 
 .btn {
   font-size: 2em;
+  border-radius: 20px;
+  margin: 2px;
+  height: 80px;
+  color: #e4e3f2;
 }
 .btn--number {
   background-color: #817f98;
@@ -27,6 +47,9 @@
 }
 .btn--top {
   background-color: #8f95d4;
+}
+.btn--equals {
+  background-color: darkgray;
 }
 
 #btn--0 {
