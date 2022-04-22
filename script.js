@@ -1,26 +1,4 @@
-// Should render the current calculation in a box at the top (calculator display)
-// It should handle decimals
-// It doesn’t need to support orders of operation
-// It should not use eval() or Function() constructor
-
-let number1 = "";
-let number2 = "";
-let operator = "";
-
-const add = (a, b) => {
-  return parseFloat(a) + parseFloat(b);
-};
-const minus = (a, b) => {
-  return parseFloat(a) - parseFloat(b);
-};
-const divide = (a, b) => {
-  return parseFloat(a) / parseFloat(b);
-};
-const multiply = (a, b) => {
-  return parseFloat(a) * parseFloat(b);
-};
-
-// how to get button to run function?
+let inputString = "";
 
 const screen = document.querySelector(".case__screen");
 const number1Screen = document.querySelector("#case__screen--number1");
@@ -28,53 +6,35 @@ const operatorScreen = document.querySelector("#case__screen--operation");
 const number2Screen = document.querySelector("#case__screen--number2");
 const resultScreen = document.querySelector("#case__screen--result");
 
-console.log(number1Screen);
-
 const buttons = document.querySelectorAll(".btn");
 const numButtons = document.querySelectorAll(".btn--number");
 const operatorButtons = document.querySelectorAll(".btn--operator");
 const equalsButton = document.querySelector("#btn--equals");
 const clearButton = document.querySelector("#btn--clear");
 
-const myForm = document.querySelector("#form");
-
 numButtons.forEach((btn) =>
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    if (operator === "") {
-      number1 += e.target.value;
-      number1Screen.innerHTML = number1;
-    } else {
-      number2 += e.target.value;
-      number2Screen.innerHTML = number2;
-    }
+    inputString += e.target.value;
+    number1Screen.innerHTML = inputString;
   })
 );
 
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
-    operator = e.target.value;
-    operatorScreen.innerHTML = operator;
+    inputString += e.target.value;
+    number1Screen.innerHTML = inputString;
   });
 });
 
 equalsButton.addEventListener("click", (e) => {
   e.preventDefault();
-  let result = "";
+  const inputArray = inputString.split(/([\d\.]+)/).filter((x) => x !== "");
 
-  if (operator === "+") {
-    result = add(number1, number2);
-  } else if (operator === "-") {
-    result = minus(number1, number2);
-  } else if (operator === "÷") {
-    result = divide(number1, number2);
-  } else if (operator === "×") {
-    result = multiply(number1, number2);
-  }
+  let result = betterCalculationFunction(inputArray);
+
   resultScreen.innerHTML = result;
-
-  console.log(result);
 });
 
 clearButton.addEventListener("click", (e) => {
@@ -82,6 +42,7 @@ clearButton.addEventListener("click", (e) => {
   number1 = "";
   number2 = "";
   operator = "";
+  inputString = "";
 
   number1Screen.innerHTML = "";
   operatorScreen.innerHTML = "";
@@ -101,9 +62,6 @@ const appendTextElement = (elementType, textString, parentElement) => {
   // 4. Attach the full html element(element with text inside it) to a parent on our html page
   parentElement.appendChild(element);
 };
-
-const testing = "1*2+3*4";
-const testArr = testing.split(/([\d\.]+)/).filter((x) => x !== "");
 
 const doTheCalculation = (testArr) => {
   doMultiplication = testArr
@@ -187,13 +145,13 @@ const betterCalculationFunction = (array) => {
   let returnArray = [...array];
   while (returnArray.length > 1) {
     console.log(returnArray);
-    if (returnArray.includes("*")) {
-      const index = returnArray.indexOf("*");
+    if (returnArray.includes("×")) {
+      const index = returnArray.indexOf("×");
       const result =
         parseFloat(returnArray[index - 1]) * parseFloat(returnArray[index + 1]);
       returnArray.splice(index - 1, 3, result);
-    } else if (returnArray.includes("/")) {
-      const index = returnArray.indexOf("/");
+    } else if (returnArray.includes("÷")) {
+      const index = returnArray.indexOf("÷");
       const result =
         parseFloat(returnArray[index - 1]) / parseFloat(returnArray[index + 1]);
       returnArray.splice(index - 1, 3, result);
