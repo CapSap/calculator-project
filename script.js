@@ -123,6 +123,8 @@ const doTheCalculation = (testArr) => {
     )
     .filter((x) => x !== "");
 
+  console.log(doMultiplication);
+
   const doDivision = doMultiplication
     .reduce(
       (workingArray, current, index) => {
@@ -175,4 +177,32 @@ const doTheCalculation = (testArr) => {
     .filter((x) => x !== "");
 
   return doSubtraction;
+};
+
+const testArr2 = ["2", "+", "2", "+", "3", "*", "4"];
+
+console.log(doTheCalculation(testArr2));
+
+const betterCalculationFunction = (array) => {
+  let returnArray = [...array];
+  while (returnArray.length >= 1) {
+    console.log(returnArray);
+    console.log(returnArray.length);
+    if (returnArray.includes("*")) {
+      const index = array.indexOf("*");
+      const result =
+        parseFloat(array[index - 1]) * parseFloat(array[index + 1]);
+      returnArray.splice(index - 1, 3, result);
+    }
+    if (returnArray.includes("+")) {
+      console.log("plus condition true");
+      const index = array.indexOf("+");
+      const result =
+        parseFloat(array[index - 1]) + parseFloat(array[index + 1]);
+      returnArray.splice(index - 1, 3, result);
+    }
+    console.log(returnArray);
+    console.log(returnArray.length);
+    return returnArray;
+  }
 };
