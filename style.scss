@@ -18,13 +18,21 @@
     &--arg {
       padding: 0;
       margin: 0;
-      display: inline;
       vertical-align: bottom;
+      width: 340px;
+      word-wrap: break-word;
     }
 
     &--result {
       font-weight: bold;
       font-size: 2.5em;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+
+      &-smaller {
+        font-size: 1.1em;
+      }
     }
   }
 

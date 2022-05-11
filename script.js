@@ -14,6 +14,10 @@ const operatorButtons = document.querySelectorAll(".btn--operator");
 const equalsButton = document.querySelector("#btn--equals");
 const clearButton = document.querySelector("#btn--clear");
 
+// calculate function that takes in an array that came from equalsButton
+// it runs until it can return a single value.
+// if it finds a "x" or "÷" it will reduce 3 elelments in array to a single evaluated value, and continue.
+
 const betterCalculationFunction = (array) => {
   let returnArray = [...array];
   while (returnArray.length > 1) {
@@ -78,6 +82,13 @@ equalsButton.addEventListener("click", (e) => {
   let result = betterCalculationFunction(inputArray);
 
   resultScreen.innerHTML = result;
+
+  // add a new class if results are long
+  const resultString = "" + result;
+  if (resultString.length > 12) {
+    resultScreen.className =
+      "case__screen--result case__screen--result-smaller";
+  }
 });
 
 clearButton.addEventListener("click", (e) => {
